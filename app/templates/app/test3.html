@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+</head>
+<style>
+    html{
+        box-sizing:border-box;                              color:#1d1d1f; 
+      -webkit-font-smoothing: antialiased;
+      font-family: 'SF Pro Display', sans-serif;
+    }body{
+      margin:0;
+      min-width:1200px;
+    }
+    .shead{
+       position: -webkit-sticky;
+      position: sticky;
+      top: .00001px;
+      background-color:rgba(255,255,255,.9);
+      backdrop-filter:blur(1px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index:99;
+    }
+    
+    .search{
+      
+      background-image:url(https://www.apple.com/ac/globalnav/7/en_IN/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_search_image__cbllq1gkias2_large.svg);
+     background-position:50% 20%;
+       background-repeat: no-repeat;
+     
+      
+    }
+    .items >*:hover{
+      color:white;
+    }
+    .items{
+      display:grid;
+      grid-auto-flow:column;
+    
+      width:100%;
+      padding:0px 30px;
+    }
+    .head{
+       padding:0px 130px;
+    }
+    .first{
+      background-color:rgb(10,10,10,.03);
+    /*   transform:translate(0,06px); */
+    }
+    .battery{
+      background-image:url(https://www.apple.com/v/iphone-13/h/images/key-features/features/battery__fsyt4rjxutay_large_2x.png);
+      background-repeat:no-repeat;
+      background-size: 74px 38px;
+      width:74px;
+      height:38px;
+     z-index:22;
+      
+      position:relative;
+    }
+    .battery_level{
+      border-radius:3px;
+      width:49px;
+      height:20px;
+      top:9px;
+      left:9px;
+      background:#c6fda6;
+     z-index:2;
+      display:inline-block;
+    position:absolute;
+     
+      
+       
+    }
+    .banner{
+      transform:rotate(-0deg)
+    }
+    
+    
+    @media (max-width:1000px){
+      .items{
+    /*     display:none; */
+       
+      }
+      .head{
+       padding:0px 30px;
+        
+    }
+     
+      .picture{
+        margin-right:0px;
+        
+      }
+      .sm{
+          margin-left:0vw;
+        display:none;
+        }
+      .lg{
+        display:unset;
+      }
+      
+    } 
+    /*   @media (max-width:500px){
+        .sm{
+          margin-left:00px;
+          display:unset;
+           overflow:hidden;
+        }
+      .picture{
+        margin-right:0px;
+        overflow:hidden;
+      }
+         .lg{
+        display:none;
+      }
+         .head{
+       padding-left:0px;
+        
+    }
+        .2nd_head{
+          padding:0px 0px;
+        }
+      
+    } */
+      @media (min-width:1000px){
+        .sm{
+          margin-left:00px;
+          display:hidden;
+           overflow:hidden;
+        }
+     
+      
+    }
+</style>
+<body>
+<link href="http://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emmet/2.3.6/emmet.cjs.js" integrity="sha512-bbfykd+HzHBek4wNKh0EgtPlNn4OsCqljM+Df/K0Q7pVm1sRd/xkOP1sUGCbqpQIVEMQYca2Gd1yHgLhAcWNpA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            head: '#2e2d2b',
+            white:'#f5f5f7',
+            grey:"rgba(0,0,0,0.49);",
+            bgc:"#fff",
+          },
+           fontFamily: {
+        'sans':  "SF Pro Text"
+      },
+          screens: {
+      'md': '1024px',
+     
+    },
+        }
+      }
+    }
+  </script>
+
+<!-- <div  class="p-0 ssr  min-h-[100vh]  m-0 "> -->
+  <!-- #changes -->
+<nav class="head cursor-pointer h-[48px] text-white text-xs font-light flex   items-center justify-between bg-head">
+   
+     <a href="{% url "index" %}" >
+      <img src="https://images.squarespace-cdn.com/content/v1/5e5d1f62786e954842c54ad2/1620867022275-NJBACLYOT1OQ1T936XNL/Screen_Shot_2021-05-12_at_8.49.27_PM-removebg-preview.png" class=" h-[40px] w-[165px] alt="">
+      <!-- <img src="https://www.apple.com/ac/globalnav/7/en_IN/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_apple_image__b5er5ngrzxqq_large.svg" "/> </a> -->
+  <div class="items text-gray-300 ">
+  <!-- <a href="{% url 'identify' %}">Identify Faces</a> -->
+  <a href="{% url 'detected' %}">Detected Faces</a>
+  <a href="{% url 'add_emp' %}">Add Peoples</a>
+  <a href="{% url 'add_photos' %}">Add photos</a>
+  {% comment %} <a href="{% url 'tryingheart' %}">tryingheart</a> {% endcomment %}
+  <a href="{% url 'dashboard' %}">Dashboard</a>
+  <!-- <a href="{% url 'show_database' %}">Show database</a> -->
+  <a href="https://form.jotform.com/240354584895468">WellBeing Form</a>
+  <a href="{% url 'train_model' %}">Train model</a>
+  
+  </div>
+  <a href="https://www.apple.com/" ><img src="https://www.apple.com/ac/globalnav/7/en_IN/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_bag_image__yzte50i47ciu_small.svg" class="h-[44px] w-[13px]" alt="Search"/> </a>
+
+</nav>
+ <!-- <div class="shead flex justify-between items-center text-xs px-[130px] py-[13px] border-b-[1px] font-light">
+   <a href="#" class="font-[500]  text-2xl">MindWell</a>
+   <div class="grid grid-flow-col gap-5 cursor-pointer items-center">
+
+    <a href="{% url 'identify' %}" class="bg-blue-600 hover:bg-[#0071e3] rounded-[960px] text-white px-[12px] py-[5px] text">Identify Faces</a>
+   </div> -->
+   <!-- #update new code here -->
+ </div>
+ <section class="first p-[30px] min-h-[100vh]  flex flex-col justify-center items-center ">
+   <h1 class="text-[24px] text-center font-[500]">Presenting MindWell</h1>
+   <p class="text-6xl text-center font-[600]">Your new superpower.</p>
+   <p class="text-center text-xl font-[300] mt-6 mb-6 max-w-[45vw]">"Machine Learning based Biometric Emotion Recognition and Support System"</p>
+   <p class="text-grey text-xl font-[300] mb-6 text-center"></p>
+   <a href="{% url 'identify' %}" class="bg-blue-600 hover:bg-[#0071e3] cursor-pointer font-light rounded-[960px] text-white text-[17px] px-[22px] py-[8px] text">Detect Face</a>
+   <picture class="flex mt-[70px] mb-[70px] picture justify-center px-[150px]  overflow-hidden w-[100%]">
+<!--      <img class="sm  w-[533px] "  src="https://www.apple.com/in/iphone-13/images/key-features/hero/hero_green__rz0u5fdewmqq_small_2x.jpg" alt=""> -->
+   <img class="lg " src="" alt="">
+<!--      <img class="lg w-[747px]"  src="https://www.apple.com/in/iphone-13/images/key-features/hero/hero_green__rz0u5fdewmqq_small_2x.jpg" alt=""> -->
+ </picture>
+ 
+   
+   
+   
+   
+
+ </div>
+ </section> 
+  <div class="grid min-w-[900px] auto-rows-[550px] py-[4vw] text-white grid-cols-12 min-h-[100vh] p-[2vw] gap-[2vw]">
+    
+<section class="bg-[#0c3139] h-[550px] relative   p-[25px] flex flex-col justify-center items-center  rounded-[20px] col-start-1 col-end-5">
+  <h3 class=" text-7xl   font-[600]">A huge leap in
+  </figure>day to day life
+ <figure class="battery inline-block">
+   <p class="battery_level"></p>
+  </h3>
+  <button class="border absolute bottom-6 right-6 flex justify-center items-center plus_icon border-[2.5px] w-[36px] text-white font-[600] h-[36px] rounded-full">
+  <div class="bg-white  w-[20px] h-[3px] rounded">
+  <div class="bg-white  rotate-[90deg]  w-[20px] h-[3px] rounded">
+ </div> 
+  </div>  
+</button>
+</section>  
+    <section class="p-[0px] overflow-hidden  flex relative  transparent text-5xl rounded-[20px] col-start-5 col-end-13 ">
+      
+        <video autoplay muted  class="z-[-2] rounded-[30px] object-cover hidden " src=""></video>
+     <!-- <img src="data:image/jpeg;base64,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" alt=""> -->
+     <img src="https://assets.weforum.org/editor/ZM8M512ZI2ZMZagSB3MwmmX1URuwvccSy5ISTECukwo.PNG" alt="">
+     <h1 class="absolute ml-[30px] font-[500] object-cover bottom-6 z-3 "></br></h1>
+      <button class="border z-2 absolute bottom-6 right-6 flex justify-center items-center plus_icon border-[2.5px] w-[36px] text-white font-[600] h-[36px] rounded-full">
+  <div class="bg-white  w-[20px] h-[3px] rounded">
+  <div class="bg-white  rotate-[90deg]  w-[20px] h-[3px] rounded">
+ </div> 
+  </div>  
+</button>
+</section> 
+
+<section class="p-[0px] overflow-hidden  flex relative  transparent text-5xl font-[500] rounded-[20px] col-start-1 bg-[#35283c] col-end-13">
+  <h1 class="absolute  m-[18px]">Advance face camera detection that will change the world.</h1>
+  <!-- <img class="w-[888px] banner h-[400px] mt-[20vw] ml-[18vw] " src="https://www.rehumanise.net/wp-content/uploads/2021/03/workplace-stress-per-100K-workers-1400x669.png" alt=""> -->
+  <img class="banner h-[450px] mt-[5vw] ml-[15vw]" src="https://www.rehumanise.net/wp-content/uploads/2021/03/workplace-stress-per-100K-workers-1400x669.png" alt="">  
+  <button class="border z-2 absolute bottom-6 right-6 flex justify-center items-center plus_icon border-[2.5px] w-[36px] text-white font-[600] h-[36px] rounded-full">
+  <div class="bg-white  w-[20px] h-[3px] rounded">
+  <div class="bg-white  rotate-[90deg]  w-[20px] h-[3px] rounded">
+ </div> 
+  </div>  
+</button>
+</section>
+
+
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+    font-family: "Roboto", sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.statistics {
+    width: 100%;
+    background: #4f8280;
+    background: linear-gradient(
+        90deg,
+        rgba(79, 130, 128, 1) 0,
+        rgba(119, 194, 190, 1) 100%
+    );
+}
+
+.statistics-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.statistics-card {
+    width: 150px;
+    height: auto;
+}
+
+.statistics-card > img {
+    max-width: 48px;
+    height: 48px;
+    display: block;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.statistics-card > p {
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.statistics-card > h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 1470px) {
+    .statistics-container {
+        gap: 80px 200px;
+    }
+}
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const elements = Array.from(document.querySelectorAll("h2[data-count]"));
+    const observer = new IntersectionObserver(
+        function (entries) {
+            entries.forEach((entry) => {
+                if (entry.intersectionRatio >= 0.5) {
+                    const index = elements.indexOf(entry.target);
+                    const delay = index * 250;
+                    setTimeout(() => startCounter(entry.target), delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.5
+        }
+    );
+    elements.forEach((element) => observer.observe(element));
+
+    function startCounter(element) {
+        const target = parseInt(element.getAttribute("data-count"));
+        const additionalData = element.getAttribute("additional-data") || "";
+        const totalFrames = 480;
+        let frame = 0;
+
+        function easeOut(t, b, c, d) {
+            return c * ((t = t / d - 1) * t * t + 1) + b;
+        }
+
+        function counter() {
+            if (frame >= totalFrames) {
+                element.textContent = target + additionalData;
+                return;
+            }
+            frame++;
+            const easedValue = easeOut(frame, 0, target, totalFrames);
+            element.textContent = Math.floor(easedValue) + additionalData;
+            requestAnimationFrame(counter);
+        }
+        counter();
+    }
+});
+
+</script>
+<body>
+    <!-- FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+<!-- END FONTS -->
+
+<div class="statistics" style="padding-top: 25px; padding-bottom: 25px">
+    <div class="limit-container">
+        <div class="statistics-container">
+            <div class="statistics-card scroll-animate">
+                <img class="" src="https://cdn.ethancopping.com/codepen/Animated%20Statistics%20Counter%20with%20Icons/0001.svg" alt="" loading="lazy" />
+                <p>Serving Over</p>
+                <h2 data-count="347">0</h2>
+                <p>requests</p>
+            </div>
+
+            <div class="statistics-card scroll-animate">
+                <img class="" src="https://cdn.ethancopping.com/codepen/Animated%20Statistics%20Counter%20with%20Icons/0002.svg" alt="" loading="lazy" />
+                <p>Care provided by</p>
+                <h2 data-count="220" additional-data="+">0+</h2>
+                <p>incredible staff</p>
+            </div>
+
+            <div class="statistics-card scroll-animate">
+                <img class="" src="https://cdn.ethancopping.com/codepen/Animated%20Statistics%20Counter%20with%20Icons/0003.svg" alt="" loading="lazy" />
+                <p>Sending out</p>
+                <h2 data-count="764">0</h2>
+                <p>order a day</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

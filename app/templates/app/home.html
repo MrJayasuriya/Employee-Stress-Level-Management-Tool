@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
+</head>
+<style>
+    body {
+        background: #AC92EC;
+    }
+    footer{
+        text-align:center;
+    }
+    .notify{
+        background: #967ADC;
+        border-radius: 1rem;
+        padding: 10px;
+    }
+    a { color: inherit; } 
+    .banner {
+        font-family: 'Audiowide', cursive;
+        background: #8067B7;
+        border: none;
+        border-radius: 1rem;
+        width: 100%;
+        margin: 5% auto auto auto;
+        padding: 10px;
+        text-align: left;
+    }
+    .logo{
+        height:70px;
+        width:70px;
+        float:left;
+        border: solid 3px #8067B7;
+        margin: 1%;
+    }
+    .btn-block{
+        margin:3px;
+    }
+    .select{
+        margin: 10px;
+        background:#967ADC;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .status{
+        background:white;
+        display: inline-block;
+        padding-left: 10px;
+        padding-right: 10px;
+        background: rgba(255,255,255,0.85);
+        border-radius: .5rem;
+    }
+    .title {
+        position:relative;
+        left:10px;
+        top:-5px;
+        font-size: 45px;
+    }
+    .streamer{
+        background:white;
+        padding: 10px;
+        border-radius: 3px;
+        margin: 5px 5px 5px 5px;
+    }
+    .search{
+        border:none;
+    }
+    .hide{
+        display:hide;
+    }
+    .closed{
+        border:solid 5px grey;
+    }
+    .online{
+        border:solid 5px green;
+    }
+    .offline{
+        border:solid 5px red;
+    }
+    
+</style>
+<body>
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+<!--For FreeCodeCamp front end project -->
+<!--This project was done before Twitch required a client id-->
+<div class="container">
+	<div class="row banner">
+		<h2 class="title"><strong>Twitch Stream Viewer</strong></h2>
+	</div>
+	<div class="row select">
+		
+		<div class="col-md-3">
+			<button class="btn btn-block" id="all"><a class="btn btn-primary"  href="{% url 'identify' %}" style="font-size: 20px; margin-bottom: 10px;">Identify Faces</a></button>
+		</div>
+        <div class="col-md-3">
+			<button class="btn btn-block" id="all"><a class="btn btn-primary"  href="{% url 'detected' %}" style="font-size: 20px; margin-bottom: 10px;">Detected Faces</a></button>
+		</div>
+		<div class="col-md-3">
+			<button class="btn btn-block" id="all"><a class="btn btn-primary"  href="{% url 'tryingheart' %}" style="font-size: 20px; margin-bottom: 10px;">Detected Faces</a></button>
+		</div>
+        <div class="col-md-3">
+			<button class="btn btn-block" id="all"><a class="btn btn-primary" href="{% url 'add_emp' %}" style="font-size: 20px; margin-bottom: 10px;">Add Employee</a></button>
+		</div>
+		<div class="col-md-3">
+			<button class="btn btn-block" id="online"><a class="btn btn-primary"  href="{% url 'add_photos' %}" style="font-size: 20px; margin-bottom: 10px;">Add photos</a></button>
+		</div>
+		<div class="col-md-3">
+			<center><button style="margin-right:50px" class="btn btn-block" id="offline"><a class="btn btn-primary"  href="{% url 'train_model' %}" style="font-size: 20px; margin-bottom: 10px; margin-right:50px">Train model</a></button></center>
+		</div>
+	</div>
+	<div class="notify hide"></div>
+	<div class="streams">
+	</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+    var usernames = ["freecodecamp",  "ESL_SC2", "Quin69", "wintergaming","Colminigun" ,"OgamingSC2" ,"SeriousGaming",  "brunofin"];
+var onlineUsers = [];
+var offlineUsers = [];
+var closedUsers = [];
+var watch = 'https://www.twitch.tv/';
+var streams = 'https://wind-bow.glitch.me/twitch-api/streams/';
+var channels = 'https://wind-bow.glitch.me/twitch-api/channels/';
+var callback = '?client_id=axjhfp777tflhy0yjb5sftsil&callback=?';
+var defaultImgs = ['https://static-cdn.jtvnw.net/jtv-static/404_preview-300x300.png', '']
+function update(online, offline) {
+	onlineUsers = [];
+	offlineUsers = [];
+	closedUsers = [];
+	usernames.forEach(function(username) {
+		$.getJSON(streams + username + callback).then(function(info) {
+			if (info.hasOwnProperty("error")) {
+				closed(info, username, defaultImgs);
+				changeHtml(online, offline);
+			} else {
+				$.getJSON(channels + username + callback).then(function(chan) {
+					var imgs = getImageLinks(chan);
+					if (info.stream == null) {
+						off(info, username, imgs);
+					} else {
+						on(info, username, imgs);
+					}
+					changeHtml(online, offline);
+				});
+			}
+		});
+	});
+}
+
+function getImageLinks(chan) {
+	var ret = [];
+	if (chan.hasOwnProperty('logo')) {
+		ret.push(chan.logo);
+	} else {
+		ret.push(defaultImgs[0]);
+	}
+	if (chan.hasOwnProperty('video_banner')) {
+		ret.push(chan.video_banner);
+	} else if (chan.hasOwnProperty('profile_banner')) {
+		ret.push(chan.profile_banner);
+	} else {
+		ret.push(defaultImgs[1]);
+	}
+	return ret;
+}
+
+function changeHtml(online, offline) { //getJSON callback
+	if (onlineUsers.length + offlineUsers.length + closedUsers.length == usernames.length) {
+		//update html
+		if (online && offline) {
+			$('.streams').html(onlineUsers.concat(offlineUsers).concat(closedUsers).join(''));
+		} else if (online) {
+			$('.streams').html(onlineUsers.join(''));
+		} else {
+			$('.streams').html(offlineUsers.join(''));
+		}
+	}
+}
+
+function on(info, name, imgs) {
+	console.log(info);
+	var html = '<div style="background: url(' + imgs[1] + ') no-repeat center;" class="streamer online"><img class="logo" src="' + imgs[0] + '" alt="online"><div class="status"><a href="'+ watch + name +'" target="_blank"><h3>' + name + '</h3><p>Online playing '+ info.stream.game+' </p></a></div></div>';
+	onlineUsers.push(html);
+}
+function off(info, name, imgs) {
+	var html = '<div style="background-image: url(' + imgs[1] + '); background-size:100%;" class="streamer offline"><img class="logo" src="' + imgs[0] + '" alt="offline"><div class="status"><a href="'+ watch + name +'" target="_blank"><h3>' + name + '</h3><p>Offline</p></a></div></div>';
+	offlineUsers.push(html);
+}
+function closed(info, name, defaultImgs) {
+	var html = '<div style="background-image: url(' + defaultImgs[1] + '); background-size:100%;" class="streamer closed"><img class="logo" src="' + defaultImgs[0] + '" alt="closed"><div class="status"><h3>' + name + '</h3><p>Account Closed</p></div></div>';
+	closedUsers.push(html);
+}
+
+function notify(msg) {
+	$('.notify').html('<h4><bold>' + msg + '<bold><h4>');
+	$('.notify').removeClass('hide');
+	$(".notify").slideDown(800).delay(1000).slideUp(800);
+}
+
+$('#addUser').click(function() { //add new username
+	var name = $('#username').val();
+	var ret = '';
+	if (name == '') {
+		otify('Input Emtpy');
+	} else if (usernames.indexOf(name) > -1) {
+		notify(name + ' was already added');
+	} else {
+		$.getJSON(streams + name + callback).then(function(out) {
+			if (out.status == 404) {
+				notify(name + ' not found');
+			} else {
+				notify(name + ' added');
+				usernames.push(name);
+				update(true, true);
+			}
+		});
+	}
+	$('#username').val("");
+});
+
+$('#online').on('click', function() {
+	changeHtml(true, false);
+});
+$('#offline').on('click', function() {
+	changeHtml(false, true);
+});
+$('#all').on('click', function() {
+	changeHtml(true, true);
+});
+update(true, true);
+</script>
+</body>
+</html>

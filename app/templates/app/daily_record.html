@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
+    <link href="http://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emmet/2.3.6/emmet.cjs.js" integrity="sha512-bbfykd+HzHBek4wNKh0EgtPlNn4OsCqljM+Df/K0Q7pVm1sRd/xkOP1sUGCbqpQIVEMQYca2Gd1yHgLhAcWNpA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            head: '#2e2d2b',
+            white:'#f5f5f7',
+            grey:"rgba(0,0,0,0.49);",
+            bgc:"#fff",
+          },
+           fontFamily: {
+        'sans':  "SF Pro Text"
+      },
+          screens: {
+      'md': '1024px',
+     
+    },
+        }
+      }
+    }
+  </script>
+
+</head>
+<body>
+    <nav class="head cursor-pointer h-[48px] text-white text-xs font-light flex   items-center justify-between bg-head">
+   
+        <a href="{% url "index" %}" >
+         <img src="https://images.squarespace-cdn.com/content/v1/5e5d1f62786e954842c54ad2/1620867022275-NJBACLYOT1OQ1T936XNL/Screen_Shot_2021-05-12_at_8.49.27_PM-removebg-preview.png" class=" h-[40px] w-[165px] alt="">
+         <!-- <img src="https://www.apple.com/ac/globalnav/7/en_IN/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_apple_image__b5er5ngrzxqq_large.svg" "/> </a> -->
+     <div class="items text-gray-300 ">
+     <!-- <a href="{% url 'identify' %}">Identify Faces</a> -->
+     <a href="{% url 'detected' %}">Detected Faces</a>
+     <a href="{% url 'add_emp' %}">Add Peoples</a>
+     <a href="{% url 'add_photos' %}">Add photos</a>
+     <a href="{% url 'daily_records' %}">Daily Records</a>
+     <a href="{% url 'dashboard' %}">Dashboard</a>
+     <!-- <a href="{% url 'show_database' %}">Show database</a> -->
+     <a href="https://form.jotform.com/240354584895468">WellBeing Form</a>
+     <a href="{% url 'train_model' %}">Train model</a>
+     
+     </div>
+     <a href="https://www.apple.com/" ><img src="https://www.apple.com/ac/globalnav/7/en_IN/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_bag_image__yzte50i47ciu_small.svg" class="h-[44px] w-[13px]" alt="Search"/> </a>
+   
+   </nav>
+    <div class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-900 py-10">
+        <!-- Component Start -->
+        <h1 class="text-lg text-gray-400 font-medium">Daily Stats for employee</h1>
+        <div class="flex flex-col mt-6">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden sm:rounded-lg">
+                        <table class="min-w-full text-sm text-gray-400">
+                            
+                            
+                            <thead class="bg-gray-800 text-xs uppercase font-medium">
+                                <tr>
+                                    
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Days
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Age
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Emotion
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Heart rate
+
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Email
+                                    </th>
+                                    
+                                    
+                                    
+                                </tr>
+                            </thead>
+                            <tbody class="bg-gray-800">
+                                <tr class="bg-black bg-opacity-20">
+                                    {% for data in models %}
+                                    <td class="px-6 py-4 whitespace-nowrap">Day 1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ data.name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ data.age }}</td>
+                                        {% if data.emotion == 'sad'%}
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.318M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                                            </svg>
+                                        </td>
+                                        {% else %}
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ data.emotion }}</td>
+
+                                        {% endif %}
+                                              
+                                    
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ data.heart_rate }}
+                                    </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ data.email }}
+                                    </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Component End  -->
+                    </div>
+</body>
+</html>

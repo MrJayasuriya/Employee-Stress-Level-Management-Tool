@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-900 py-10">
+        <!-- Component Start -->
+        <h1 class="text-lg text-gray-400 font-medium">Users Information All over the world</h1>
+        <div class="flex flex-col mt-6">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden sm:rounded-lg">
+                        <table class="min-w-full text-sm text-gray-400">
+                            <thead class="bg-gray-800 text-xs uppercase font-medium">
+                                <tr>
+                                    
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Id
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Username
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Age
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Emotion
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Heartrate
+                                    </th>
+                                    
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Email
+                                    </th>
+                                    
+                                    {% comment %} <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Age
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left tracking-wider">
+                                        Street
+                                    </th> {% endcomment %}
+                                    
+                                    
+                                    
+                                    
+                                    
+                                </tr>
+                            </thead>
+                            <tbody class="bg-gray-800">
+                                <tr class="bg-black bg-opacity-20">
+                                {% for user in models %}
+                                        
+                                    
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ user.id}}
+                                    </td>
+                                    
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ user.name}}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ user.age }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ user.emotion }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ user.heart_rate }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ user.email }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ user.dominant_emotion }}
+                                    </td>
+      
+                                    </tr>
+                                {% endfor %}
+                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Component End  -->
+                    </div>
+    
+</body>
+</html>
